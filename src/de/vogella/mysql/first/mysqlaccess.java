@@ -40,14 +40,14 @@ public class mysqlaccess {
       preparedStatement.executeUpdate();
 
       preparedStatement = connect
-          .prepareStatement("SELECT username, password from mahtlemc_java.user");
+          .prepareStatement("select username, password from mahtlemc_java.user");
       resultSet = preparedStatement.executeQuery();
       writeResultSet(resultSet);
 
       // Remove again the insert comment
       preparedStatement = connect
       .prepareStatement("delete from mahtlemc_java.user where username= ? ;");
-      preparedStatement.setString(1, "username");
+      preparedStatement.setString(1, "me");
       preparedStatement.executeUpdate();
       
       resultSet = statement
