@@ -20,42 +20,38 @@ public class mysqlaccess {
       Class.forName("com.mysql.jdbc.Driver");
       // Setup the connection with the DB
       connect = DriverManager
-          .getConnection("jdbc:mysql://localhost/feedback?"
-              + "user=javauser&password=6vDay1S7lFhSkYoU");
+          .getConnection("jdbc:mysql://mahtlemcen.org/mahtlemc_java?"
+              + "user=mahtlemc_java&password=^HN8ZwIHnT,r");
 
       // Statements allow to issue SQL queries to the database
       statement = connect.createStatement();
       // Result set get the result of the SQL query
       resultSet = statement
-          .executeQuery("select * from feedback.comments");
+          .executeQuery("select * from mahtlemc_java.user");
       writeResultSet(resultSet);
 
       // PreparedStatements can use variables and are more efficient
       preparedStatement = connect
-          .prepareStatement("insert into  feedback.comments values (default, ?, ?, ?, ? , ?, ?)");
-      // "myuser, webpage, datum, summary, COMMENTS from feedback.comments");
+          .prepareStatement("insert into  mahtlemc_java.user values (default, ?, ?)");
+      // "id, username, password");
       // Parameters start with 1
-      preparedStatement.setString(1, "Test");
-      preparedStatement.setString(2, "TestEmail");
-      preparedStatement.setString(3, "TestWebpage");
-      preparedStatement.setDate(4, new java.sql.Date(2009, 12, 11));
-      preparedStatement.setString(5, "TestSummary");
-      preparedStatement.setString(6, "TestComment");
+      preparedStatement.setString(1, "username");
+      preparedStatement.setString(2, "password");
       preparedStatement.executeUpdate();
 
       preparedStatement = connect
-          .prepareStatement("SELECT myuser, webpage, datum, summary, COMMENTS from feedback.comments");
+          .prepareStatement("SELECT username, password from mahtlemc_java.user");
       resultSet = preparedStatement.executeQuery();
       writeResultSet(resultSet);
 
       // Remove again the insert comment
       preparedStatement = connect
-      .prepareStatement("delete from feedback.comments where myuser= ? ; ");
-      preparedStatement.setString(1, "Test");
+      .prepareStatement("delete from mahtlemc_java.user where username= ? ;");
+      preparedStatement.setString(1, "username");
       preparedStatement.executeUpdate();
       
       resultSet = statement
-      .executeQuery("select * from feedback.comments");
+      .executeQuery("select * from mahtlemc_java.user");
       writeMetaData(resultSet);
       
     } catch (Exception e) {
@@ -85,16 +81,11 @@ public class mysqlaccess {
       // also possible to get the columns via the column number
       // which starts at 1
       // e.g. resultSet.getSTring(2);
-      String user = resultSet.getString("myuser");
-      String website = resultSet.getString("webpage");
-      String summary = resultSet.getString("summary");
-      Date date = resultSet.getDate("datum");
-      String comment = resultSet.getString("comments");
-      System.out.println("User: " + user);
-      System.out.println("Website: " + website);
-      System.out.println("summary: " + summary);
-      System.out.println("Date: " + date);
-      System.out.println("Comment: " + comment);
+      String username = resultSet.getString("username");
+      String password = resultSet.getString("password");
+      System.out.println("Username: " + username);
+      System.out.println("Password: " + password);
+      System.out.println("----------------------");
     }
   }
 
